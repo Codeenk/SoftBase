@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "description": "SoftBase Services — custom software studio. Animated agency website.",
+  "engines": {
+    "node": ">=20.19"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
