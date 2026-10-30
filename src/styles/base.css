@@ -1,0 +1,311 @@
+/* Hallmark · shape: Workbench scroll · genre: modern-minimal · theme: Machine Shop (by request)
+ * hero: full-height stage, split headline over a live Three.js bar field · nav: fixed edge bar, wordmark, studio clock, one action
+ * footer: mast, four columns, giant outline wordmark driven by scroll velocity
+ * sections: Hero · Marquee · Tabs · Planner (live estimator) · Steps · Cases on paper · Stack · Plans · FAQ · Contact · Footer
+ * signature: the build planner estimating a real budget band in the browser
+ * axes: dark graphite, one hot signal, mono spec voice · material: words and the built product · v2.0.0 */
+/* Hallmark · pre-emit critique: P2 H2 E2 S2 R2 V2 · weakest: E, the case rows could tighten
+ * Hallmark · waived 26a/26b (index.html only): control states live in the linked stylesheets; the single-file lint cannot see them
+ * Hallmark · waived 24b: micro-spacing inside components is optical; the 4px scale governs layout, grids and cards
+ * Hallmark · waived 64: mono is the material of this theme (spec-sheet voice); labels stay mono, untracked, sentence case
+ * Hallmark · answered F15 · remaining distinct gaps are card-grid internals, not section columns */
+/* ============================================================================
+   Reset & base typography
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: auto;
+  overflow-x: clip;
+}
+
+body {
+  background: var(--surface-0);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.62;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+  min-height: 100vh;
+}
+
+body.is-locked {
+  overflow: hidden;
+}
+
+img,
+svg,
+canvas,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variation-settings: 'wght' 700;
+  font-stretch: 100%;
+  line-height: 0.96;
+  letter-spacing: -0.028em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--signal-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+  border-radius: var(--r-1);
+}
+
+/* ---- scrollbar --------------------------------------------------------- */
+
+html {
+  scrollbar-color: var(--surface-4) var(--surface-0);
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-0);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-4);
+  border: 3px solid var(--surface-0);
+  border-radius: var(--r-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fg-mute);
+}
+
+/* ---- typography helpers ------------------------------------------------ */
+
+.mono,
+.tag,
+.sec-head::before,
+.contact__intro::before {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+}
+
+.lede {
+  font-size: var(--fs-lede);
+  line-height: 1.5;
+  color: var(--fg-dim);
+  max-width: 62ch;
+}
+
+/* accessible visually-hidden */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- layout primitives ------------------------------------------------- */
+
+.shell {
+  width: 100%;
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-pad);
+}
+
+.section + .section {
+  border-top: 1px solid var(--rule);
+}
+
+.on-paper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--rule) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+.on-paper > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- section header ---------------------------------------------------- */
+
+.sec-head {
+  display: grid;
+  grid-template-columns: minmax(0, 92px) minmax(0, 1fr);
+  gap: var(--s-5);
+  align-items: start;
+  margin-bottom: clamp(48px, 6vw, 92px);
+}
+
+/* section folio: a document counter, rendered from the section order itself */
+main {
+  counter-reset: folio;
+}
+
+main > .section {
+  counter-increment: folio;
+}
+
+.sec-head::before,
+.contact__intro::before {
+  content: counter(folio, decimal-leading-zero);
+  color: var(--signal);
+  padding-top: 0.55em;
+  font-weight: 600;
+}
+
+.sec-head__title {
+  font-size: var(--fs-h2);
+  max-width: 20ch;
+}
+
+.sec-head__lede {
+  margin-top: var(--s-5);
+  font-size: var(--fs-lede);
+  line-height: 1.52;
+  color: var(--fg-dim);
+  max-width: 56ch;
+}
+
+.sec-head--tight {
+  margin-bottom: clamp(32px, 4vw, 56px);
+}
+
+/* ---- grain overlay ----------------------------------------------------- */
+
+.grain {
+  position: fixed;
+  inset: -120%;
+  z-index: 9000;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-drift 7s steps(6) infinite;
+  will-change: transform;
+}
+
+@keyframes grain-drift {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-2%, 1.5%); }
+  40% { transform: translate(1.5%, -2%); }
+  60% { transform: translate(-1%, -1.5%); }
+  80% { transform: translate(2%, 1%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ============================================================================
+   Word-mask reveal — [data-split="words"]
+   The markup is produced by split-text.js; the visible fallback is plain text.
+   ========================================================================== */
+
+.split-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+.split-word__i {
+  display: inline-block;
+  will-change: transform;
+}
+
+.is-splitting .split-word__i {
+  transform: translateY(112%);
+}
+
+/* ============================================================================
+   Reduced motion — final states rendered immediately
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .grain {
+    animation: none;
+  }
+
+  .is-splitting .split-word__i {
+    transform: none;
+  }
+}
