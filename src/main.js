@@ -640,6 +640,13 @@ function initNavScroll() {
 
   const onScroll = (y) => {
     navEl.classList.toggle('is-scrolled', y > 24);
+    // the nav never hides on small screens (the burger is the only navigation)
+    // and never while the mobile menu is open — the fixed overlay lives inside it
+    if (window.innerWidth <= 900 || isMenuOpen()) {
+      navEl.classList.remove('is-hidden');
+      lastY = y;
+      return;
+    }
     if (y > 520 && y > lastY + 4) navEl.classList.add('is-hidden');
     else if (y < lastY - 4 || y <= 520) navEl.classList.remove('is-hidden');
     lastY = y;
@@ -676,19 +683,25 @@ function initActiveSection() {
   });
 }
 
+function isMenuOpen() {
+  return $('#nav-links').classList.contains('is-open');
+}
+
 function openMenu() {
   $('#nav-links').classList.add('is-open');
   $('#nav-burger').setAttribute('aria-expanded', 'true');
+  document.documentElement.classList.add('is-locked');
   document.body.classList.add('is-locked');
+  $('#nav').classList.remove('is-hidden');
   state.lenis?.stop();
   $('#nav-close').focus();
 }
 
 function closeMenu() {
-  const linksEl = $('#nav-links');
-  if (!linksEl.classList.contains('is-open')) return;
-  linksEl.classList.remove('is-open');
+  if (!isMenuOpen()) return;
+  $('#nav-links').classList.remove('is-open');
   $('#nav-burger').setAttribute('aria-expanded', 'false');
+  document.documentElement.classList.remove('is-locked');
   document.body.classList.remove('is-locked');
   state.lenis?.start();
 }
@@ -1171,13 +1184,7 @@ function initForm() {
 
 /* ==================================================================== INIT */
 
-function init() {
-  try {
-    boot();
-  } catch (err) {
-    window.__bootError = err?.stack || String(err);
-  }
-
+function start() {
   initLenis();
   initAnchors();
   initMenu();
@@ -1200,6 +1207,15 @@ function init() {
     document.fonts.ready.then(() => ScrollTrigger.refresh());
   }
   window.addEventListener('load', () => ScrollTrigger.refresh());
+}
+
+function init() {
+  try {
+    boot();
+    start();
+  } catch (err) {
+    window.__bootError = err?.stack || String(err);
+  }
 }
 
 if (document.readyState === 'loading') {

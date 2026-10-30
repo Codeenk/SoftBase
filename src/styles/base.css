@@ -43,7 +43,8 @@ body {
   min-height: 100vh;
 }
 
-body.is-locked {
+html.is-locked,
+html.is-locked body {
   overflow: hidden;
 }
 

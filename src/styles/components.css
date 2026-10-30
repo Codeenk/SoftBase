@@ -386,6 +386,14 @@
     display: none;
   }
 
+  /* backdrop-filter would become the containing block for the fixed menu
+     overlay, collapsing it into the nav bar once the page has scrolled */
+  .nav:has(.nav__links.is-open) {
+    backdrop-filter: none;
+    background: var(--surface-0);
+    border-bottom-color: transparent;
+  }
+
   .nav__burger {
     display: block;
   }
