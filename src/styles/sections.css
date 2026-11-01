@@ -1012,6 +1012,104 @@
   justify-content: center;
 }
 
+/* --------------------------------------------------------- FORM EXTRAS */
+
+.pgroup__hint {
+  color: var(--fg-dim);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  max-width: 58ch;
+  margin-bottom: var(--s-4);
+}
+
+.pbudget {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.pbudget input {
+  flex: 1 1 240px;
+  padding: 12px 14px;
+  background: var(--surface-0);
+  border: 1px solid var(--rule-2);
+  border-radius: var(--r-1);
+  color: var(--fg);
+  transition: border-color var(--dur-2) var(--ease-out);
+}
+
+.pbudget input:hover {
+  border-color: var(--rule-3);
+}
+
+.pbudget input:focus-visible {
+  outline: none;
+  border-color: var(--signal);
+}
+
+.form__check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
+  cursor: pointer;
+}
+
+.form__check input {
+  margin-top: 4px;
+  accent-color: var(--signal);
+  flex-shrink: 0;
+}
+
+.form__check span {
+  color: var(--fg-dim);
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+}
+
+.form__check span a {
+  color: var(--fg);
+  border-bottom: 1px solid var(--rule-3);
+  transition: color var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out);
+}
+
+.form__check span a:hover {
+  color: var(--signal);
+  border-color: var(--signal);
+}
+
+.form__check.has-error span {
+  color: var(--signal);
+}
+
+fieldset.field {
+  border: 0;
+  padding: 0;
+  min-inline-size: 0;
+}
+
+.field__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--fg-dim);
+  font-weight: 500;
+  margin-bottom: var(--s-2);
+  padding: 0;
+}
+
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+fieldset.field.has-error .pchip__body {
+  border-color: var(--signal);
+}
+
 /* -------------------------------------------------------------------- FAQ */
 
 .priceflow {
@@ -1505,6 +1603,11 @@
 
   .cform__row {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pbudget {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .footer__grid {

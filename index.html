@@ -7,7 +7,7 @@
     <title>SoftBase Services · Custom Software, Built Around Your Workflow</title>
     <meta
       name="description"
-      content="SoftBase Services designs and builds custom software for teams whose requirements do not fit off the shelf. Product engineering, platform integration, data and applied AI, and legacy modernisation."
+      content="SoftBase Services is a custom software engineering studio based in Mumbai, working remotely across India and internationally. Product engineering, platforms and integrations, data and applied AI, and modernisation."
     />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="SoftBase Services" />
@@ -71,10 +71,10 @@
       </nav>
 
       <div class="nav__right">
-        <span class="nav__clock" id="nav-clock" aria-label="Current time in Oakland">
+        <span class="nav__clock" id="nav-clock" aria-label="Current time in Mumbai">
           <span class="nav__clock-dot" aria-hidden="true"></span>
           <span id="nav-clock-time">--:--:--</span>
-          <span class="nav__clock-tz">PDT</span>
+          <span class="nav__clock-tz">IST</span>
         </span>
         <a class="btn btn--signal nav__cta" href="#contact" data-magnetic data-cursor="go">
           <span>Start a project</span>
@@ -115,23 +115,9 @@
                 <path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" />
               </svg>
             </a>
-            <a class="btn btn--ghost btn--lg" href="#work" data-magnetic data-cursor="see">See the work</a>
+            <a class="btn btn--ghost btn--lg" href="#capabilities" data-magnetic data-cursor="see">What we do</a>
           </div>
 
-          <dl class="hero__stats">
-            <div class="hero__stat">
-              <dt>Projects delivered</dt>
-              <dd data-count="84" data-suffix="">0</dd>
-            </div>
-            <div class="hero__stat">
-              <dt>Avg. build duration</dt>
-              <dd data-count="11" data-suffix=" wks">0</dd>
-            </div>
-            <div class="hero__stat">
-              <dt>Systems still running</dt>
-              <dd data-count="100" data-suffix="%">0</dd>
-            </div>
-          </dl>
         </div>
 
         <div class="hero__scroll" aria-hidden="true">
@@ -212,6 +198,22 @@
                 <legend class="pgroup__legend"><span class="pgroup__step">D</span> Size of the team it serves</legend>
                 <div class="pchips pchips--row" id="planner-team" role="radiogroup" aria-label="Team size"></div>
               </fieldset>
+
+              <fieldset class="pgroup">
+                <legend class="pgroup__legend"><span class="pgroup__step">E</span> What budget have you allocated for this project?</legend>
+                <p class="pgroup__hint">
+                  Share your expected project budget or an approximate range in INR. This helps us
+                  understand your expectations and recommend an appropriate project scope. Final
+                  pricing is discussed after reviewing your requirements.
+                </p>
+                <div class="pbudget">
+                  <input id="planner-budget" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. ₹1,50,000 or ₹1 to 3 lakh" />
+                  <label class="pchip">
+                    <input class="sr-only" type="checkbox" id="planner-budget-unsure" />
+                    <span class="pchip__body">Not sure yet</span>
+                  </label>
+                </div>
+              </fieldset>
             </div>
 
             <div class="planner__output" id="planner-output" aria-live="polite">
@@ -235,23 +237,6 @@
           </header>
 
           <ol class="steps" id="steps"></ol>
-        </div>
-      </section>
-
-      <!-- ============================================================== WORK -->
-      <section class="section work on-paper" id="work">
-        <div class="shell">
-          <header class="sec-head">
-            <div class="sec-head__text">
-              <h2 class="sec-head__title" data-split="words">Work that moved a number.</h2>
-              <p class="sec-head__lede">
-                Three representative engagements. Client names withheld; the problems and the
-                outcomes are real.
-              </p>
-            </div>
-          </header>
-
-          <div class="cases" id="cases"></div>
         </div>
       </section>
 
@@ -301,7 +286,7 @@
               <div>
                 <h3 class="priceflow__title">We call, or we meet</h3>
                 <p class="priceflow__body">
-                  Email, a video call, or a sit-down at the Oakland studio:
+                  Email, a video call, or a written scope review:
                   whichever pins down requirements fastest.
                 </p>
               </div>
@@ -340,8 +325,8 @@
             <h2 class="contact__title" data-split="words">Tell us the thing that doesn’t work yet.</h2>
             <p class="contact__lede">
               Send the messy version: the half-formed brief, the spreadsheet, the sentence
-              your team says in meetings. We reply within one business day with an honest
-              read on whether we fit.
+              your team says in meetings. We reply to every serious inquiry with an
+              honest read on whether we fit.
             </p>
 
             <dl class="contact__details">
@@ -350,12 +335,16 @@
                 <dd><a href="mailto:build@softbase.services" data-cursor="mail">build@softbase.services</a></dd>
               </div>
               <div>
-                <dt>Studio</dt>
-                <dd>2140 Foundry Street, Unit 9<br />Oakland, CA 94607</dd>
+                <dt>Location</dt>
+                <dd>Mumbai, Maharashtra, India</dd>
+              </div>
+              <div>
+                <dt>Working with</dt>
+                <dd>Clients across India and internationally, remote-first</dd>
               </div>
               <div>
                 <dt>Hours</dt>
-                <dd>Mon to Fri · 09:00 to 18:00 PT</dd>
+                <dd>Mon to Fri · IST</dd>
               </div>
             </dl>
           </div>
@@ -376,21 +365,90 @@
 
             <div class="cform__row">
               <div class="field">
-                <label for="f-company">Company</label>
+                <label for="f-company">Company or organization · optional</label>
                 <input id="f-company" name="company" type="text" autocomplete="organization" placeholder="Northwind Logistics" />
                 <p class="field__error" data-error-for="f-company"></p>
               </div>
               <div class="field">
-                <label for="f-budget">Your budget (USD)</label>
-                <input id="f-budget" name="budget" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 25000, or 'not sure yet'" />
-                <p class="field__error" data-error-for="f-budget"></p>
+                <label for="f-website">Website · optional</label>
+                <input id="f-website" name="website" type="url" autocomplete="url" placeholder="https://yourcompany.com" />
+                <p class="field__error" data-error-for="f-website"></p>
               </div>
             </div>
 
+            <div class="cform__row">
+              <div class="field">
+                <label for="f-phone">Phone or WhatsApp · optional</label>
+                <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+91 98XXX XXXXX" />
+                <p class="field__error" data-error-for="f-phone"></p>
+              </div>
+              <div class="field">
+                <label for="f-timeline">Preferred timeline · optional</label>
+                <div class="select">
+                  <select id="f-timeline" name="timeline">
+                    <option value="">Select a timeline</option>
+                  </select>
+                  <svg viewBox="0 0 16 16" aria-hidden="true" width="12" height="12"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" /></svg>
+                </div>
+                <p class="field__error" data-error-for="f-timeline"></p>
+              </div>
+            </div>
+
+            <fieldset class="field">
+              <legend class="field__label">What do you need? · select all that apply</legend>
+              <div class="pchips" id="f-services" role="group" aria-label="Services required"></div>
+              <p class="field__error" data-error-for="f-services"></p>
+            </fieldset>
+
             <div class="field">
-              <label for="f-brief">What needs building?</label>
-              <textarea id="f-brief" name="brief" rows="5" required placeholder="Our dispatchers currently coordinate 40+ routes in three spreadsheets and a whiteboard..."></textarea>
+              <label for="f-brief">Project description</label>
+              <textarea id="f-brief" name="brief" rows="4" required placeholder="What needs building, improving or automating? The messy version is fine."></textarea>
               <p class="field__error" data-error-for="f-brief"></p>
+            </div>
+
+            <div class="cform__row">
+              <div class="field">
+                <label for="f-workflow">Current workflow or problem · optional</label>
+                <textarea id="f-workflow" name="workflow" rows="2" placeholder="How is this handled today? Spreadsheets, WhatsApp groups, manual re-entry..."></textarea>
+                <p class="field__error" data-error-for="f-workflow"></p>
+              </div>
+              <div class="field">
+                <label for="f-integrations">Integrations required · optional</label>
+                <textarea id="f-integrations" name="integrations" rows="2" placeholder="Tally, Zoho, Shopify, WhatsApp, internal APIs..."></textarea>
+                <p class="field__error" data-error-for="f-integrations"></p>
+              </div>
+            </div>
+
+            <div class="cform__row">
+              <div class="field">
+                <label for="f-budget">What budget have you allocated for this project?</label>
+                <input id="f-budget" name="budget" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. ₹1,50,000 or ₹1 to 3 lakh, or 'not sure yet'" />
+                <p class="field__error" data-error-for="f-budget"></p>
+              </div>
+              <div class="field">
+                <label>Budget status</label>
+                <div class="pchips pchips--row">
+                  <label class="pchip">
+                    <input class="sr-only" type="radio" name="budget-status" value="Decided" checked />
+                    <span class="pchip__body">Budget decided</span>
+                  </label>
+                  <label class="pchip">
+                    <input class="sr-only" type="radio" name="budget-status" value="Not decided" />
+                    <span class="pchip__body">Not decided yet</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <label class="form__check">
+              <input type="checkbox" id="f-privacy" name="privacy" required />
+              <span>I agree that SoftBase may store and process the information in this form to respond to my inquiry, as described in the <a href="privacy.html">privacy policy</a>.</span>
+            </label>
+            <p class="field__error" data-error-for="f-privacy"></p>
+
+            <div class="hp-field" aria-hidden="true">
+              <label for="f-website-hp">Leave this field empty</label>
+              <input id="f-website-hp" name="website_hp" type="text" tabindex="-1" autocomplete="off" />
             </div>
 
             <div class="cform__foot">
@@ -427,8 +485,7 @@
               <li><a href="#capabilities">Capabilities</a></li>
               <li><a href="#planner">Build planner</a></li>
               <li><a href="#process">Process</a></li>
-              <li><a href="#work">Selected work</a></li>
-            </ul>
+                          </ul>
           </div>
           <div class="footer__col">
             <h3>Working together</h3>
@@ -438,14 +495,15 @@
               <li><a href="#contact">Start a project</a></li>
               <li><a href="careers.html">Careers · BD internship</a></li>
               <li><a href="mailto:build@softbase.services">build@softbase.services</a></li>
+              <li><a href="privacy.html">Privacy policy</a></li>
             </ul>
           </div>
           <div class="footer__col">
-            <h3>Studio</h3>
+            <h3>Location</h3>
             <ul>
-              <li>2140 Foundry Street, Unit 9</li>
-              <li>Oakland, CA 94607</li>
-              <li>Mon to Fri · 09:00 to 18:00 PT</li>
+              <li>Mumbai, Maharashtra, India</li>
+              <li>Working remotely across India and internationally</li>
+              <li>Mon to Fri · IST</li>
             </ul>
           </div>
           <div class="footer__col footer__col--signal">
@@ -457,7 +515,7 @@
 
         <div class="footer__base">
           <p>© <span id="year">2026</span> SoftBase Services</p>
-          <p class="footer__base-note">Built in Oakland · Crafted with care</p>
+          <p class="footer__base-note">Built in Mumbai · Crafted with care</p>
         </div>
       </div>
 

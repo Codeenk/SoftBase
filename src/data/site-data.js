@@ -1,7 +1,11 @@
 /**
  * SoftBase Services — central content source.
- * PLACEHOLDER CONTENT: client names, engagement figures and testimonials are
- * representative samples. Replace with SoftBase's real work before publishing.
+ * SoftBase is a custom software engineering studio based in Mumbai, India,
+ * working remotely with clients in India and internationally.
+ *
+ * NOTE FOR THE FOUNDERS: engagement copy, service capability lists and the
+ * process durations below should be reviewed before publishing. Nothing here
+ * invents clients, numbers, addresses or prices.
  */
 
 export const company = {
@@ -9,11 +13,10 @@ export const company = {
   short: 'SoftBase',
   tagline: 'Custom software, built around how you actually work.',
   email: 'build@softbase.services',
-  phone: '+1 (415) 555-0142',
-  address: '2140 Foundry Street, Unit 9, Oakland, CA 94607',
-  hours: 'Mon–Fri · 09:00–18:00 PT',
-  founded: 2019,
-  responseTime: 'within one business day',
+  careersEmail: 'careers@softbase.services',
+  location: 'Mumbai, Maharashtra, India',
+  hours: 'Mon to Fri · IST',
+  timezone: 'Asia/Kolkata',
 };
 
 /* ---------------------------------------------------------------- services */
@@ -25,35 +28,33 @@ export const services = [
     icon: 'solar:layers-bold-duotone',
     title: 'Product engineering',
     summary:
-      'Web and mobile products designed, specified and shipped end to end by one accountable team.',
+      'Complete software products engineered from requirements through implementation, by one accountable team.',
     detail:
-      'We run discovery, interface design, architecture and delivery under a single roof. That means no handover gaps, no arguments about whose fault a bug is, and no six-week silence between a design decision and a working build.',
+      'We build custom web and mobile applications, business tools, internal platforms and end-to-end products: UI and UX design, backend engineering, APIs, databases and deployment. You describe the problem; we carry it through architecture, build and release.',
     capabilities: [
-      'Discovery workshops & technical discovery',
-      'Product design systems & prototypes',
-      'Web and mobile application build',
-      'Public APIs and developer documentation',
-      'Automated test suites and CI',
+      'Custom web and mobile applications',
+      'Business applications and internal tools',
+      'Product UI/UX design',
+      'Backend engineering, APIs and databases',
+      'End-to-end product development',
     ],
-    metric: { value: '6–14', unit: 'weeks to first release' },
   },
   {
     id: 'platform',
     index: '02',
     icon: 'solar:server-2-bold-duotone',
-    title: 'Platform & integrations',
+    title: 'Platforms & integrations',
     summary:
-      'The connective tissue between the systems you already run, and the one you still need.',
+      'The connective tissue between the systems your business already uses, and the ones it still needs.',
     detail:
-      'Most businesses do not need another product. They need their existing tools to talk. We build integration layers, internal platforms and single sign-on so your team stops copying data between tabs and spreadsheets.',
+      'Most businesses do not need another product. They need their existing tools to talk. We build integrations, data synchronisation and workflow orchestration so information stops moving through copy-paste, spreadsheets and re-keyed forms.',
     capabilities: [
-      'API architecture and gateway design',
-      'Third-party and legacy system integration',
-      'Internal developer platforms',
-      'Identity, SSO and permission models',
-      'Event-driven and batch data pipelines',
+      'API and third-party platform integrations',
+      'Data synchronisation between systems',
+      'Workflow orchestration and automation',
+      'Database and business-system connectivity',
+      'Cross-platform automation',
     ],
-    metric: { value: '40+', unit: 'systems connected in 2025' },
   },
   {
     id: 'data',
@@ -61,17 +62,16 @@ export const services = [
     icon: 'solar:graph-up-bold-duotone',
     title: 'Data & applied AI',
     summary:
-      'Dashboards people trust and models that earn their keep, not AI for its own sake.',
+      'Practical AI and data solutions for real business requirements, not AI for its own sake.',
     detail:
-      'We start from the decision you need to make, work backwards to the data, then build only what moves that decision. If a model cannot beat the spreadsheet it replaces, we will tell you before we charge you for it.',
+      'We develop AI-powered business applications, LLM-powered tools, spreadsheet automation, intelligent dashboards and automated reporting. We start from the decision or workload you need to improve, then build the smallest system that does the job reliably.',
     capabilities: [
-      'Warehouse and reporting architecture',
-      'Operational dashboards and alerting',
-      'Applied LLM and machine learning features',
-      'Evaluation harnesses and guardrails',
-      'Data quality and observability',
+      'AI-powered business applications',
+      'LLM-powered tools and assistants',
+      'Spreadsheet automation',
+      'Intelligent dashboards and automated reporting',
+      'Data pipelines and processing systems',
     ],
-    metric: { value: '3.2x', unit: 'median reporting time saved' },
   },
   {
     id: 'modernise',
@@ -79,17 +79,16 @@ export const services = [
     icon: 'solar:refresh-bold-duotone',
     title: 'Modernisation',
     summary:
-      'Rescue a system that nobody wants to touch without betting the company on a rewrite.',
+      'Improve the software you already run without betting the business on a full rewrite.',
     detail:
-      'A big-bang rewrite is how good businesses disappear. We modernise in slices: strangler patterns, observable seams, and a running system at every step, so you always have a fallback and never a freeze.',
+      'We audit legacy code and architecture, refactor, optimise performance, reduce technical debt and modernise backends incrementally. A big-bang rewrite is rarely the answer; measured upgrades with the system running at every step usually are.',
     capabilities: [
       'Legacy code and architecture audits',
-      'Incremental strangler migrations',
-      'Service extraction and re-platforming',
-      'Performance and cost reduction',
-      'Knowledge transfer to your team',
+      'Codebase refactoring and technical debt reduction',
+      'Website performance optimisation and revamping',
+      'Database optimisation',
+      'Backend modernisation and incremental upgrades',
     ],
-    metric: { value: '0', unit: 'planned downtime events' },
   },
 ];
 
@@ -99,76 +98,34 @@ export const process = [
   {
     index: '01',
     title: 'Intake & mapping',
-    duration: '2–4 days',
+    duration: 'A few days',
     body: 'We interview the people doing the work, not just the people buying it. We map the process as it actually runs, including the workarounds nobody puts in the requirements doc.',
     outputs: ['Process map', 'Constraint list', 'Feasibility note'],
   },
   {
     index: '02',
     title: 'Blueprint',
-    duration: '1–2 weeks',
-    body: 'You get a written spec: architecture, scope boundaries, data model, and a fixed delivery plan. Every expensive decision is made here, on paper, where it is cheap to change.',
+    duration: 'One to two weeks',
+    body: 'You get a written spec: architecture, scope boundaries, data model, and a delivery plan. Every expensive decision is made here, on paper, where it is cheap to change.',
     outputs: ['Architecture document', 'Scoping contract', 'Delivery plan'],
   },
   {
     index: '03',
     title: 'Build',
-    duration: '2 weeks per sprint',
-    body: 'Short sprints, weekly demos, a staging environment you can open any day. You see working software continuously and can steer it without waiting for a phase gate.',
-    outputs: ['Weekly demo build', 'Automated tests', 'CI/CD pipeline'],
+    duration: 'Short sprints',
+    body: 'Short sprints, regular demos, a staging environment you can open any day. You see working software continuously and can steer it without waiting for a phase gate.',
+    outputs: ['Demo builds', 'Automated tests', 'CI/CD pipeline'],
   },
   {
     index: '04',
     title: 'Handover & run',
-    duration: '1 week + support',
+    duration: 'Final week + support',
     body: 'We document it, deploy it, train your team and hand over the keys. Then we stay reachable, because software does not stop needing care on launch day.',
-    outputs: ['Runbook & handover docs', 'Team training', 'Support retainer option'],
+    outputs: ['Runbook & handover docs', 'Team training', 'Support options'],
   },
 ];
 
-/* ------------------------------------------------------------------ work */
-/* PLACEHOLDER CONTENT — representative engagements, not named clients. */
-
-export const work = [
-  {
-    index: '01',
-    client: 'Series-B logistics platform',
-    sector: 'Freight & logistics',
-    title: 'Dispatch console rebuilt around one screen',
-    problem:
-      'Dispatchers were running four tools at once and rebuilding the day plan by hand every morning.',
-    outcome:
-      'One live console now generates, re-sequences and dispatches the whole day plan, with the optimiser proposing changes and the dispatcher holding final say.',
-    stack: ['TypeScript', 'React', 'PostgreSQL', 'Go'],
-    metric: { value: '4.1h', label: 'saved per dispatcher, daily' },
-  },
-  {
-    index: '02',
-    client: 'Regional healthcare network',
-    sector: 'Healthcare',
-    title: 'Patient intake that took nine minutes',
-    problem:
-      'Front-desk staff were re-keying intake forms from a paper packet into three separate systems.',
-    outcome:
-      'A tablet-first intake flow writes once and fans out to scheduling, records and billing, with consent captured per stage.',
-    stack: ['Kotlin', 'Swift', 'FHIR', 'Node.js'],
-    metric: { value: '71%', label: 'reduction in intake time' },
-  },
-  {
-    index: '03',
-    client: 'B2B equipment manufacturer',
-    sector: 'Manufacturing',
-    title: 'A quote engine that stopped losing money',
-    problem:
-      'Quotes were assembled in spreadsheets from parts, labour and freight rules that lived in three different places.',
-    outcome:
-      'A single pricing service owns every rule, versioned and auditable. Sales reps quote in minutes and nobody edits a spreadsheet again.',
-    stack: ['Python', 'React', 'PostgreSQL', 'Azure'],
-    metric: { value: '18%', label: 'lift in quoted win rate' },
-  },
-];
-
-/* ----------------------------------------------------------------- stack */
+/* ------------------------------------------------------------------ stack */
 
 export const stack = [
   { group: 'Languages', items: ['TypeScript', 'Python', 'Go', 'Rust', 'Kotlin', 'Swift', 'SQL'] },
@@ -203,8 +160,8 @@ export const engagement = [
     name: 'Sprint',
     kicker: 'Best for a single unknown',
     budget: 'You set the budget',
-    unit: 'we scope a two-week build around it',
-    body: 'A focused team for two weeks, for when one specific thing is blocking you and needs unblocking.',
+    unit: 'we scope a short build around it',
+    body: 'A focused engagement for a few weeks. Best when one specific thing is blocking you and you need it unblocked, not a whole system.',
     includes: ['Discovery or spike', 'Working increment', 'Written handover', 'Fixed weekly cadence'],
     featured: false,
   },
@@ -214,7 +171,7 @@ export const engagement = [
     name: 'Full build',
     kicker: 'Best for a new product',
     budget: 'You set the budget',
-    unit: 'we scope the whole phase around it',
+    unit: 'we scope the whole project around it',
     body: 'End-to-end delivery of a custom product: discovery, design, build, deploy and the documentation to run it without us.',
     includes: [
       'Everything in Sprint',
@@ -231,8 +188,8 @@ export const engagement = [
     name: 'Embedded team',
     kicker: 'Best for ongoing work',
     budget: 'You set the budget',
-    unit: 'we scope the monthly retainer around it',
-    body: 'A named senior team inside your process: your standups, your board, your standards, scaling as the roadmap moves.',
+    unit: 'we scope the ongoing retainer around it',
+    body: 'A named engineering team inside your process: your standups, your board, your standards, scaling as the roadmap moves.',
     includes: [
       'Everything in Full build',
       'Dedicated cross-functional squad',
@@ -249,15 +206,15 @@ export const engagement = [
 export const faqs = [
   {
     q: 'How quickly can you start?',
-    a: 'Discovery usually begins within two to three weeks of a signed engagement. Tighter than that? Say so in the first message; we hold emergency capacity for it.',
+    a: 'Discovery usually begins within a few weeks of a signed engagement. If your timeline is tighter than that, say so in the first message; we occasionally hold emergency capacity for it.',
   },
   {
     q: 'Do you work with our existing codebase?',
     a: 'Frequently, and it is one of our strengths. Every engagement starts with a read-only audit of what you have, so we can tell you honestly whether the existing code is worth extending, needs surgery, or should be replaced. We will show our working either way.',
   },
   {
-    q: 'What does a fixed price actually cover?',
-    a: 'The scope written into the blueprint, delivered to its acceptance criteria. If requirements change the architecture, we re-scope in writing before work continues: you are never surprised by an invoice.',
+    q: 'How does pricing work?',
+    a: 'There is no price list, because no two builds are the same. You share your requirements and the budget you have in mind; the founders review them, discuss the scope with you, and agree a commercial arrangement directly. Sharing a budget never means automatic acceptance.',
   },
   {
     q: 'Who owns the code and the designs?',
@@ -269,7 +226,7 @@ export const faqs = [
   },
   {
     q: 'What happens after launch?',
-    a: 'Every build ends with a runbook, a recorded handover session and a support window included. After that you can take it in-house, move it to an embedded team, or let us run it: all three are normal, and none of them requires a new negotiation from scratch.',
+    a: 'Every build ends with a runbook, a recorded handover session and a support window included. After that you can take it in-house, move to an embedded arrangement, or let us run it. All three are normal.',
   },
 ];
 
@@ -284,50 +241,75 @@ export const plannerProductTypes = [
 ];
 
 export const plannerFeatures = [
-  { id: 'payments', label: 'Payments & billing', cost: 1.2, module: 'Payment rails and reconciliation' },
-  { id: 'realtime', label: 'Real-time updates', cost: 1.1, module: 'Live sync and event streaming' },
-  { id: 'ai', label: 'AI / ML features', cost: 1.5, module: 'Applied model integration' },
-  { id: 'offline', label: 'Offline tolerance', cost: 1.3, module: 'Local cache and sync queue' },
-  { id: 'multitenant', label: 'Multi-tenancy', cost: 1.2, module: 'Tenant isolation and admin' },
-  { id: 'analytics', label: 'Analytics & reporting', cost: 1.1, module: 'Reporting layer and dashboards' },
-  { id: 'integrations', label: 'Third-party integrations', cost: 1.2, module: 'Integration adapters' },
-  { id: 'compliance', label: 'Compliance & audit', cost: 1.4, module: 'Audit trail and controls' },
+  { id: 'payments', label: 'Payments & billing', module: 'Payment rails and reconciliation' },
+  { id: 'realtime', label: 'Real-time updates', module: 'Live sync and event streaming' },
+  { id: 'ai', label: 'AI / ML features', module: 'Applied model integration' },
+  { id: 'offline', label: 'Offline tolerance', module: 'Local cache and sync queue' },
+  { id: 'multitenant', label: 'Multi-tenancy', module: 'Tenant isolation and admin' },
+  { id: 'analytics', label: 'Analytics & reporting', module: 'Reporting layer and dashboards' },
+  { id: 'integrations', label: 'Third-party integrations', module: 'Integration adapters' },
+  { id: 'compliance', label: 'Compliance & audit', module: 'Audit trail and controls' },
 ];
 
 export const plannerTimelines = [
-  { id: 'fast', label: '4–6 weeks', factor: 0.8 },
-  { id: 'standard', label: '2–3 months', factor: 1 },
-  { id: 'considered', label: 'Quarter or longer', factor: 1.35 },
-  { id: 'unsure', label: 'Not sure yet', factor: 1.1 },
+  { id: 'fast', label: 'ASAP' },
+  { id: 'one-to-three', label: '1 to 3 months' },
+  { id: 'three-to-six', label: '3 to 6 months' },
+  { id: 'flexible', label: 'Flexible' },
 ];
 
 export const plannerTeamSizes = [
-  { id: 'solo', label: 'Just me', factor: 0.7 },
-  { id: 'small', label: '2–5 people', factor: 1 },
-  { id: 'mid', label: '6–15 people', factor: 1.25 },
-  { id: 'large', label: '15+ people', factor: 1.5 },
+  { id: 'solo', label: 'Just me' },
+  { id: 'small', label: '2 to 5 people' },
+  { id: 'mid', label: '6 to 15 people' },
+  { id: 'large', label: '15+ people' },
 ];
 
 export const plannerBaseStacks = {
   web: {
     stack: ['TypeScript', 'React', 'Node.js', 'PostgreSQL'],
     note: 'A pragmatic, fast-to-ship web stack with one language across the whole system.',
+    considerations: [
+      'Who exactly uses it, and how often?',
+      'Which existing tools must it connect to on day one?',
+      'What does the manual process look like today?',
+    ],
   },
   mobile: {
     stack: ['Kotlin', 'Swift', 'Node.js', 'PostgreSQL'],
     note: 'Native mobile where platform behaviour matters, with one shared API behind it.',
+    considerations: [
+      'iOS, Android, or both at launch?',
+      'Does it need to work offline?',
+      'How will it be distributed to users?',
+    ],
   },
   internal: {
     stack: ['TypeScript', 'React', 'Node.js', 'PostgreSQL'],
     note: 'Lightweight and maintainable: internal tools should not need a platform team.',
+    considerations: [
+      'How many people touch it in a day?',
+      'Which spreadsheets or manual steps does it replace?',
+      'Who trains the team on it?',
+    ],
   },
   api: {
     stack: ['Go', 'PostgreSQL', 'Redis', 'Kubernetes'],
     note: 'Built for throughput, predictable latency and horizontal scaling.',
+    considerations: [
+      'Which clients and systems will consume it?',
+      'What does expected traffic look like in year one?',
+      'Are there compliance or data-residency requirements?',
+    ],
   },
   data: {
     stack: ['Python', 'dbt', 'Snowflake', 'Airflow'],
     note: 'Pipeline-first, with orchestration and quality checks treated as first-class.',
+    considerations: [
+      'Which sources feed it, and how reliable are they?',
+      'What decisions should the data support?',
+      'How fresh does the data need to be?',
+    ],
   },
 };
 
@@ -335,7 +317,6 @@ export const nav = [
   { label: 'Capabilities', href: '#capabilities' },
   { label: 'Planner', href: '#planner' },
   { label: 'Process', href: '#process' },
-  { label: 'Work', href: '#work' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'Careers', href: 'careers.html' },
 ];

@@ -20,7 +20,6 @@ import {
   company,
   services,
   process,
-  work,
   stack,
   engagement,
   faqs,
@@ -83,7 +82,14 @@ const plusSVG =
 
 const state = {
   lenis: null,
-  planner: { product: 'web', features: new Set(['integrations']), timeline: 'standard', team: 'small' },
+  planner: {
+    product: 'web',
+    features: new Set(['integrations']),
+    timeline: 'one-to-three',
+    team: 'small',
+    budget: '',
+    budgetUnsure: false,
+  },
   capIndex: 0,
   capTimer: null,
   heroActive: true,
@@ -97,12 +103,43 @@ function boot() {
   buildCapabilities();
   buildPlanner();
   buildSteps();
-  buildCases();
   buildStack();
   buildPlans();
   buildFaq();
+  buildInquiryForm();
   $('#year').textContent = String(new Date().getFullYear());
   startClock();
+}
+
+/* --------------------------------------------------------- inquiry form build */
+
+const inquiryServices = [
+  'Product engineering',
+  'Platforms & integrations',
+  'Data & applied AI',
+  'Modernisation',
+  'Not sure yet',
+];
+
+function buildInquiryForm() {
+  const chips = $('#f-services');
+  if (chips) {
+    chips.innerHTML = inquiryServices
+      .map(
+        (sv) => `
+        <label class="pchip">
+          <input class="sr-only" type="checkbox" name="services" value="${sv}" />
+          <span class="pchip__body">${sv}</span>
+        </label>`
+      )
+      .join('');
+  }
+  const timeline = $('#f-timeline');
+  if (timeline) {
+    timeline.innerHTML =
+      '<option value="">Select a timeline</option>' +
+      plannerTimelines.map((t) => `<option value="${t.label}">${t.label}</option>`).join('');
+  }
 }
 
 /* -------------------------------------------------------------------- nav */
@@ -121,8 +158,8 @@ function startClock() {
   const timeEl = $('#nav-clock-time');
   const tzEl = $('.nav__clock-tz');
   if (!timeEl) return;
-  const fmt = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/Los_Angeles',
+  const fmt = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Asia/Kolkata',
     hour12: false,
     hour: '2-digit',
     minute: '2-digit',
@@ -133,7 +170,7 @@ function startClock() {
     const parts = fmt.formatToParts(new Date());
     const get = (type) => parts.find((p) => p.type === type)?.value ?? '';
     timeEl.textContent = `${get('hour')}:${get('minute')}:${get('second')}`;
-    if (tzEl) tzEl.textContent = get('timeZoneName');
+    if (tzEl) tzEl.textContent = 'IST';
   };
   tick();
   setInterval(tick, 1000);
@@ -217,11 +254,7 @@ function renderCapPanel(panel, i) {
     <h3 class="cap__panel-title">${s.title}</h3>
     <p class="cap__panel-summary">${s.summary}</p>
     <p class="cap__panel-detail">${s.detail}</p>
-    <ul class="cap__panel-list">${s.capabilities.map((c) => `<li>${c}</li>`).join('')}</ul>
-    <dl class="cap__panel-metric">
-      <dt>${s.metric.unit}</dt>
-      <dd>${s.metric.value}</dd>
-    </dl>`;
+    <ul class="cap__panel-list">${s.capabilities.map((c) => `<li>${c}</li>`).join('')}</ul>`;
 }
 
 /* ---------------------------------------------------------------- planner */
@@ -309,6 +342,8 @@ function buildPlanner() {
     );
     state.planner.timeline = wrap.querySelector('input[name="planner-timeline"]:checked')?.value ?? 'standard';
     state.planner.team = wrap.querySelector('input[name="planner-team"]:checked')?.value ?? 'small';
+    state.planner.budget = $('#planner-budget')?.value.trim() ?? '';
+    state.planner.budgetUnsure = $('#planner-budget-unsure')?.checked ?? false;
     renderPlan();
   });
 
@@ -350,6 +385,7 @@ function computePlan() {
     modules,
     stack: base.stack,
     note: base.note,
+    considerations: base.considerations ?? [],
   };
 }
 
@@ -360,35 +396,93 @@ function renderPlan() {
 
   el.innerHTML = `
     <div class="plan__head">
-      <span>Scope sketch · live</span>
+      <span>Preliminary scope · not a quote</span>
       <span class="plan__head-dot" aria-hidden="true"></span>
     </div>
     <div class="plan__body">
       <dl class="plan__row">
-        <dt>Build size</dt>
-        <dd class="plan__size">${plan.size}</dd>
+        <dt>Preliminary scale</dt>
+        <dd class="plan__size">${plan.size} <span>(indicative)</span></dd>
       </dl>
       <dl class="plan__row">
         <dt>To first release</dt>
         <dd class="plan__timeline">≈ ${plan.weeks} weeks</dd>
       </dl>
       <dl class="plan__row">
-        <dt>Starting stack</dt>
+        <dt>Suggested direction</dt>
         <dd><ul class="plan__stack">${plan.stack.map((s) => `<li>${s}</li>`).join('')}</ul></dd>
       </dl>
       <dl class="plan__row">
-        <dt>Module list</dt>
+        <dt>Potential modules</dt>
         <dd><ul class="plan__modules">${plan.modules.map((m) => `<li>${m}</li>`).join('')}</ul></dd>
       </dl>
+      <dl class="plan__row">
+        <dt>Questions for discovery</dt>
+        <dd><ul class="plan__modules">${plan.considerations.map((m) => `<li>${m}</li>`).join('')}</ul></dd>
+      </dl>
       <p class="plan__note">${plan.note}</p>
+      <button class="btn btn--signal plan__cta" type="button" id="plan-discuss" data-cursor="go">
+        <span>Discuss this project with SoftBase</span>${arrowSVG}
+      </button>
     </div>
-    <div class="plan__foot">Runs in your browser · bring it with your budget for an exact estimate</div>`;
+    <div class="plan__foot">A starting sketch, not a final specification or delivery commitment</div>`;
+
+  $('#plan-discuss')?.addEventListener('click', transferPlannerToInquiry);
 
   if (!reducedMotion) {
     gsap.fromTo(
       $$('.plan__body > *, .plan__head, .plan__foot', el),
       { y: 16, autoAlpha: 0 },
       { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out', stagger: 0.06, overwrite: true }
+    );
+  }
+}
+
+/* ------------------------------------------------- planner -> inquiry handoff */
+
+function transferPlannerToInquiry() {
+  const { product, features, timeline, team } = state.planner;
+  // read the budget inputs live: typing may not have fired a change event yet
+  const budget = $('#planner-budget')?.value.trim() ?? '';
+  const budgetUnsure = $('#planner-budget-unsure')?.checked ?? false;
+  const plan = computePlan();
+  const productLabel = plannerProductTypes.find((p) => p.id === product)?.label ?? product;
+  const featureLabels = [...features]
+    .map((id) => plannerFeatures.find((f) => f.id === id)?.label)
+    .filter(Boolean);
+  const timelineLabel = plannerTimelines.find((t) => t.id === timeline)?.label ?? '';
+  const teamLabel = plannerTeamSizes.find((t) => t.id === team)?.label ?? '';
+  const budgetText = budgetUnsure ? 'Not sure yet' : budget ? budget : 'Not sure yet';
+
+  const summary = [
+    `[Build planner] ${productLabel}`,
+    featureLabels.length ? `Features: ${featureLabels.join(', ')}` : '',
+    timelineLabel ? `Timeline: ${timelineLabel}` : '',
+    teamLabel ? `Serves: ${teamLabel}` : '',
+    `Preliminary scale: ${plan.size} (indicative), ≈${plan.weeks} weeks to first release`,
+  ]
+    .filter(Boolean)
+    .join('\n');
+
+  const brief = $('#f-brief');
+  if (brief) {
+    brief.value = brief.value.trim()
+      ? `${summary}\n\n${brief.value.trim()}`
+      : `${summary}\n\n`;
+  }
+  const budgetField = $('#f-budget');
+  if (budgetField && !budgetField.value.trim()) budgetField.value = budgetText;
+  const budgetRadio = document.querySelector(
+    `input[name="budget-status"][value="${budgetUnsure || !budget ? 'Not decided' : 'Decided'}"]`
+  );
+  if (budgetRadio) budgetRadio.checked = true;
+
+  scrollToTarget('#contact');
+  if (!reducedMotion) {
+    gsap.fromTo(
+      '.cform',
+      { scale: 0.99 },
+      { scale: 1, duration: 0.5, ease: 'power2.out', overwrite: 'auto' }
     );
   }
 }
@@ -410,37 +504,6 @@ function buildSteps() {
         <p class="step__body">${p.body}</p>
         <ul class="step__outputs">${p.outputs.map((o) => `<li>${o}</li>`).join('')}</ul>
       </li>`
-    )
-    .join('');
-}
-
-function buildCases() {
-  const wrap = $('#cases');
-  if (!wrap) return;
-  wrap.innerHTML = work
-    .map(
-      (c) => `
-      <article class="case">
-        <div class="case__main">
-          <p class="case__sector"><b>${c.index}</b>${c.client} · ${c.sector}</p>
-          <h3 class="case__title">${c.title}</h3>
-          <dl class="case__rows">
-            <div class="case__row">
-              <dt>Problem</dt>
-              <dd>${c.problem}</dd>
-            </div>
-            <div class="case__row">
-              <dt>Built</dt>
-              <dd>${c.outcome}</dd>
-            </div>
-          </dl>
-          <ul class="case__stack">${c.stack.map((s) => `<li>${s}</li>`).join('')}</ul>
-        </div>
-        <dl class="case__metric">
-          <dt>${c.metric.label}</dt>
-          <dd>${c.metric.value}</dd>
-        </dl>
-      </article>`
     )
     .join('');
 }
@@ -1103,8 +1166,6 @@ function initReveals() {
   revealUp('.cap__panel');
   revealUp('.pgroup', { stagger: 4 });
   revealUp('.step', { stagger: 4 });
-  revealUp('.case__main');
-  revealUp('.case__metric');
   revealUp('.stack__group', { stagger: 3 });
   revealUp('.plan-card', { stagger: 3 });
   revealUp('.priceflow__step', { stagger: 3 });
@@ -1127,24 +1188,28 @@ function initForm() {
 
   const setError = (id, msg) => {
     const input = $(`#${id}`);
-    const field = input.closest('.field');
+    if (!input) return;
+    const field = input.closest('.field') || input.closest('fieldset');
     const errorEl = $(`[data-error-for="${id}"]`);
-    field.classList.toggle('has-error', Boolean(msg));
+    if (field) field.classList.toggle('has-error', Boolean(msg));
     if (errorEl) errorEl.textContent = msg ?? '';
     input.setAttribute('aria-invalid', msg ? 'true' : 'false');
   };
 
-  $$('input, textarea', form).forEach((input) => {
-    input.addEventListener('input', () => setError(input.id, ''));
+  $$('input, textarea, select', form).forEach((input) => {
+    input.addEventListener('input', () => setError(input.id || input.name, ''));
+    input.addEventListener('change', () => setError(input.id || input.name, ''));
   });
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let ok = true;
+  const chosenServices = () =>
+    [...form.querySelectorAll('input[name="services"]:checked')].map((i) => i.value);
 
+  const validate = () => {
+    let ok = true;
     const name = $('#f-name').value.trim();
     const email = $('#f-email').value.trim();
     const brief = $('#f-brief').value.trim();
+    const website = $('#f-website').value.trim();
 
     if (!name) {
       setError('f-name', 'Tell us who to reply to.');
@@ -1154,33 +1219,85 @@ function initForm() {
       setError('f-email', 'A valid work email is needed.');
       ok = false;
     }
+    if (chosenServices().length === 0) {
+      setError('f-services', 'Pick at least one, or choose "Not sure yet".');
+      ok = false;
+    }
     if (brief.length < 10) {
       setError('f-brief', 'Give us at least a sentence to work with.');
       ok = false;
     }
+    if (website && !/^https?:\/\/.+\..+/.test(website)) {
+      setError('f-website', 'A full link starting with https://');
+      ok = false;
+    }
+    if (!$('#f-privacy').checked) {
+      setError('f-privacy', 'The privacy acknowledgement is required.');
+      ok = false;
+    }
+    return ok;
+  };
 
-    if (!ok) {
+  const collect = () => ({
+    name: $('#f-name').value.trim(),
+    email: $('#f-email').value.trim(),
+    company: $('#f-company').value.trim(),
+    website: $('#f-website').value.trim(),
+    phone: $('#f-phone').value.trim(),
+    services: chosenServices(),
+    brief: $('#f-brief').value.trim(),
+    workflow: $('#f-workflow').value.trim(),
+    integrations: $('#f-integrations').value.trim(),
+    timeline: $('#f-timeline').value,
+    budget: $('#f-budget').value.trim(),
+    budgetStatus: form.querySelector('input[name="budget-status"]:checked')?.value ?? '',
+    privacy: $('#f-privacy').checked,
+    websiteHp: $('#f-website-hp').value,
+    source: document.referrer || 'direct',
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) {
       statusEl.classList.add('is-visible');
       statusEl.textContent = 'A few fields need attention above.';
       return;
     }
 
+    const payload = collect();
     submitBtn.disabled = true;
     if (btnLabel) btnLabel.textContent = 'Sending…';
 
-    setTimeout(() => {
+    try {
+      const res = await fetch('/api/inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok) {
+        form.reset();
+        statusEl.classList.add('is-visible');
+        statusEl.textContent =
+          data.message ?? 'Inquiry received. The founders review every requirement personally and will reach out to discuss scope and budget.';
+      } else if (res.status === 429) {
+        statusEl.classList.add('is-visible');
+        statusEl.textContent = 'Too many submissions from this connection. Please wait a minute and try again, or email build@softbase.services.';
+      } else {
+        statusEl.classList.add('is-visible');
+        statusEl.textContent =
+          data.message ??
+          'The submission could not be recorded. Your entries are kept below; try again, or email build@softbase.services directly.';
+      }
+    } catch {
+      statusEl.classList.add('is-visible');
+      statusEl.textContent =
+        'The network dropped before we could record your inquiry. Nothing was lost: try again, or email build@softbase.services directly.';
+    } finally {
       submitBtn.disabled = false;
       if (btnLabel) btnLabel.textContent = 'Send the brief';
-      form.reset();
-      statusEl.classList.add('is-visible');
-      statusEl.textContent = `Received. ${company.name.split(' ')[0]} replies within one business day, watch your inbox.`;
-      if (!reducedMotion)
-        gsap.fromTo(
-          statusEl,
-          { x: -10, autoAlpha: 0 },
-          { x: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' }
-        );
-    }, 900);
+    }
   });
 }
 

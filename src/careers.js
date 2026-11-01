@@ -1,6 +1,6 @@
 /* ============================================================================
    SoftBase Services — careers page engine
-   Loader, cursor, nav, reveals, role content, application form.
+   Loader, cursor, nav, reveals, internship content, application form.
    ========================================================================== */
 
 import './styles/tokens.css';
@@ -13,7 +13,21 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 
-import { role, duties, lookingFor, youLeaveWith, gradYears } from './data/careers-data.js';
+import {
+  role,
+  responsibilities,
+  mentorship,
+  benefits,
+  lookingFor,
+  disclosure,
+  acknowledgement,
+  durationOptions,
+  joiningOptions,
+  weeklyOptions,
+  academicYearOptions,
+  platformOptions,
+  faqs,
+} from './data/careers-data.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -60,8 +74,11 @@ document.body.classList.add('is-locked');
 function boot() {
   buildRole();
   buildDuties();
+  buildMentorship();
   buildFit();
-  buildYearOptions();
+  buildBenefits();
+  buildFaq();
+  buildFormOptions();
   $('#year').textContent = String(new Date().getFullYear());
   startClock();
 }
@@ -70,22 +87,18 @@ function boot() {
 
 function buildRole() {
   $('#role-summary').textContent = role.summary;
-  const rows = [
-    ['Role', role.title],
-    ['Reports to', role.reports],
-    ['Setting', role.setting],
-    ['Commitment', role.commitment],
-    ['Compensation', role.compensation],
-  ];
-  $('#role-rows').innerHTML = rows
+  $('#role-rows').innerHTML = role.terms
     .map(([k, v]) => `<div class="role__row"><dt>${k}</dt><dd>${v}</dd></div>`)
     .join('');
+  $('#disclosure-overview-text').textContent = disclosure;
+  $('#disclosure-form-text').textContent = disclosure;
+  $('#a-ack-text').textContent = acknowledgement;
 }
 
 function buildDuties() {
   const ol = $('#duty-list');
   if (!ol) return;
-  ol.innerHTML = duties
+  ol.innerHTML = responsibilities
     .map(
       (d) => `
       <li class="step">
@@ -101,36 +114,127 @@ function buildDuties() {
     .join('');
 }
 
+function buildMentorship() {
+  const wrap = $('#mentorship-list');
+  if (!wrap) return;
+  wrap.innerHTML = mentorship
+    .map(
+      (m, i) => `
+      <div class="step">
+        <div class="step__top">
+          <span class="step__index">${String(i + 1).padStart(2, '0')}</span>
+        </div>
+        <h3 class="step__title">${m.title}</h3>
+        <p class="step__body">${m.body}</p>
+      </div>`
+    )
+    .join('');
+}
+
 function buildFit() {
   const mark = (li) => `<li>${checkSVG}<span>${li}</span></li>`;
   $('#fit-list').innerHTML = lookingFor.map(mark).join('');
-  $('#gain-list').innerHTML = youLeaveWith.map(mark).join('');
+  $('#gain-list').innerHTML = [
+    'A Certificate of Completion',
+    'A Letter of Recommendation',
+    'Real research, outreach and pipeline work on your record',
+  ]
+    .map(mark)
+    .join('');
 }
 
-function buildYearOptions() {
-  const select = $('#a-year');
-  select.innerHTML =
-    '<option value="">Select a year</option>' +
-    gradYears.map((y) => `<option value="${y}">${y}</option>`).join('');
+function buildBenefits() {
+  const wrap = $('#benefit-list');
+  if (!wrap) return;
+  wrap.innerHTML = benefits
+    .map(
+      (b) => `
+      <article class="plan-card">
+        <div class="plan-card__icon">${checkSVG.replace('width="12" height="12"', 'width="20" height="20"')}</div>
+        <h3 class="plan-card__name">${b.title}</h3>
+        <p class="plan-card__body">${b.body}</p>
+      </article>`
+    )
+    .join('');
+}
+
+function buildFaq() {
+  const list = $('#faq-list');
+  if (!list) return;
+  list.innerHTML = faqs
+    .map(
+      (f, i) => `
+      <div class="faq-item">
+        <button class="faq-item__q" type="button" aria-expanded="false" aria-controls="cfaq-a-${i}" id="cfaq-q-${i}">
+          <span>${f.q}</span>
+          <span class="faq-item__icon"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M8 2v12M2 8h12" fill="none" stroke="currentColor" stroke-width="1.5" /></svg></span>
+        </button>
+        <div class="faq-item__a" id="cfaq-a-${i}" role="region" aria-labelledby="cfaq-q-${i}">
+          <div class="faq-item__a-inner"><p>${f.a}</p></div>
+        </div>
+      </div>`
+    )
+    .join('');
+
+  $$('.faq-item__q', list).forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const open = item.classList.contains('is-open');
+      $$('.faq-item.is-open', list).forEach((other) => {
+        other.classList.remove('is-open');
+        $('.faq-item__q', other).setAttribute('aria-expanded', 'false');
+      });
+      if (!open) {
+        item.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+}
+
+function buildFormOptions() {
+  const fill = (id, options, placeholder) => {
+    const el = $(id);
+    if (!el) return;
+    el.innerHTML =
+      `<option value="">${placeholder}</option>` +
+      options.map((o) => `<option value="${o}">${o}</option>`).join('');
+  };
+  fill('#a-year', academicYearOptions, 'Select your year');
+  fill('#a-duration', durationOptions, 'Select a duration');
+  fill('#a-joining', joiningOptions, 'Select availability');
+  fill('#a-weekly', weeklyOptions, 'Select weekly availability');
+
+  const platforms = $('#a-platforms');
+  if (platforms) {
+    platforms.innerHTML = platformOptions
+      .map(
+        (p) => `
+        <label class="pchip">
+          <input class="sr-only" type="checkbox" name="platforms" value="${p}" />
+          <span class="pchip__body">${p}</span>
+        </label>`
+      )
+      .join('');
+  }
 }
 
 function startClock() {
   const timeEl = $('#nav-clock-time');
   const tzEl = $('.nav__clock-tz');
   if (!timeEl) return;
-  const fmt = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/Los_Angeles',
+  const fmt = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Asia/Kolkata',
     hour12: false,
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
-    timeZoneName: 'short',
   });
   const tick = () => {
     const parts = fmt.formatToParts(new Date());
     const get = (type) => parts.find((p) => p.type === type)?.value ?? '';
     timeEl.textContent = `${get('hour')}:${get('minute')}:${get('second')}`;
-    if (tzEl) tzEl.textContent = get('timeZoneName');
+    if (tzEl) tzEl.textContent = 'IST';
   };
   tick();
   setInterval(tick, 1000);
@@ -199,7 +303,6 @@ function heroIntro() {
       { yPercent: 0, y: 0, duration: 1.05, stagger: 0.055 },
       0.05
     )
-    .fromTo('.chero__meta', { y: 18, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7 }, 0.3)
     .fromTo('.chero__lede', { y: 22, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.8 }, 0.45)
     .fromTo('.hero__actions > *', { y: 18, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7, stagger: 0.08 }, 0.58)
     .fromTo('.chero__facts', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.9 }, 0.75)
@@ -284,7 +387,6 @@ function initNavScroll() {
   let lastY = 0;
   const onScroll = (y) => {
     navEl.classList.toggle('is-scrolled', y > 24);
-    // the burger is the only navigation on small screens: never hide there
     if (window.innerWidth <= 900 || isMenuOpen()) {
       navEl.classList.remove('is-hidden');
       lastY = y;
@@ -431,9 +533,12 @@ function revealUp(selector, vars = {}) {
 function initReveals() {
   revealUp('.sec-head__lede');
   revealUp('.role__summary');
-  revealUp('.role__row', { stagger: 5 });
-  revealUp('.step', { stagger: 4 });
+  revealUp('.role__row', { stagger: 6 });
+  revealUp('.disclosure');
+  revealUp('.step', { stagger: 5 });
   revealUp('.fit__col', { stagger: 2 });
+  revealUp('.plan-card', { stagger: 3 });
+  revealUp('.faq-item', { stagger: 5 });
   revealUp('.contact__intro > *', { stagger: 5 });
   revealUp('.cform');
   revealUp('.footer__top');
@@ -463,71 +568,140 @@ function initApplyForm() {
 
   const setError = (id, msg) => {
     const input = $(`#${id}`);
-    const field = input.closest('.field');
+    if (!input) return;
+    const field = input.closest('.field') || input.closest('fieldset') || input.closest('label');
     const errorEl = $(`[data-error-for="${id}"]`);
-    field.classList.toggle('has-error', Boolean(msg));
+    if (field) field.classList.toggle('has-error', Boolean(msg));
     if (errorEl) errorEl.textContent = msg ?? '';
     input.setAttribute('aria-invalid', msg ? 'true' : 'false');
   };
 
-  $$('input, textarea', form).forEach((input) => {
+  $$('input, textarea, select', form).forEach((input) => {
     input.addEventListener('input', () => setError(input.id, ''));
+    input.addEventListener('change', () => setError(input.id, ''));
   });
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+  const val = (id) => $(`#${id}`)?.value.trim() ?? '';
+  const normaliseLink = (v) => (v && !/^https?:\/\//.test(v) ? `https://${v}` : v);
+
+  const validate = () => {
     let ok = true;
-
-    const name = $('#a-name').value.trim();
-    const email = $('#a-email').value.trim();
-    const school = $('#a-school').value.trim();
-    const link = $('#a-link').value.trim();
-    const why = $('#a-why').value.trim();
-
-    if (!name) {
+    if (!val('a-name')) {
       setError('a-name', 'Tell us who is applying.');
       ok = false;
     }
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (!val('a-email') || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('a-email'))) {
       setError('a-email', 'A valid email is needed.');
       ok = false;
     }
-    if (!school) {
-      setError('a-school', 'Where do you study, and what?');
+    if (!val('a-college')) {
+      setError('a-college', 'Where do you study?');
       ok = false;
     }
-    if (link && !/^https?:\/\/.+\..+/.test(link)) {
-      setError('a-link', 'Paste a full link starting with https://');
+    if (!val('a-course')) {
+      setError('a-course', 'What do you study?');
       ok = false;
     }
-    if (why.length < 20) {
+    if (!$('#a-year').value) {
+      setError('a-year', 'Select your year.');
+      ok = false;
+    }
+    if (!$('#a-duration').value) {
+      setError('a-duration', 'Choose 1, 2 or 3 months.');
+      ok = false;
+    }
+    if (!$('#a-joining').value) {
+      setError('a-joining', 'When can you start?');
+      ok = false;
+    }
+    if (!$('#a-weekly').value) {
+      setError('a-weekly', 'How many hours a week can you give?');
+      ok = false;
+    }
+    if (val('a-why').length < 20) {
       setError('a-why', 'Give us at least a couple of honest sentences.');
       ok = false;
     }
+    if (!$('#a-ack').checked) {
+      setError('a-ack', 'The internship terms acknowledgement is required.');
+      ok = false;
+    }
+    if (!$('#a-privacy').checked) {
+      setError('a-privacy', 'The privacy acknowledgement is required.');
+      ok = false;
+    }
+    return ok;
+  };
 
-    if (!ok) {
+  const collect = () => ({
+    name: val('a-name'),
+    email: val('a-email'),
+    phone: val('a-phone'),
+    city: val('a-city'),
+    college: val('a-college'),
+    course: val('a-course'),
+    year: $('#a-year').value,
+    duration: $('#a-duration').value,
+    joining: $('#a-joining').value,
+    weekly: $('#a-weekly').value,
+    linkedin: normaliseLink(val('a-linkedin')),
+    resume: normaliseLink(val('a-resume')),
+    experience: val('a-experience'),
+    platforms: [...form.querySelectorAll('input[name="platforms"]:checked')].map((i) => i.value),
+    why: val('a-why'),
+    acknowledgement: $('#a-ack').checked,
+    privacy: $('#a-privacy').checked,
+    websiteHp: val('a-website-hp'),
+    source: document.referrer || 'direct',
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) {
       statusEl.classList.add('is-visible');
       statusEl.textContent = 'A few fields need attention above.';
       return;
     }
 
+    const payload = collect();
     submitBtn.disabled = true;
     if (btnLabel) btnLabel.textContent = 'Sending…';
 
-    setTimeout(() => {
-      submitBtn.disabled = false;
-      if (btnLabel) btnLabel.textContent = 'Send the application';
-      form.reset();
+    try {
+      const res = await fetch('/api/application', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok) {
+        form.reset();
+        statusEl.classList.add('is-visible');
+        statusEl.textContent =
+          data.message ??
+          'Application received. We read every one and reply to each applicant; shortlisted candidates hear from us for a further conversation.';
+      } else if (res.status === 409) {
+        statusEl.classList.add('is-visible');
+        statusEl.textContent =
+          data.message ?? 'We already have an application with this email address.';
+      } else if (res.status === 429) {
+        statusEl.classList.add('is-visible');
+        statusEl.textContent = 'Too many submissions from this connection. Please wait a minute and try again, or email careers@softbase.services.';
+      } else {
+        statusEl.classList.add('is-visible');
+        statusEl.textContent =
+          data.message ??
+          'The application could not be recorded. Your entries are kept below; try again, or email careers@softbase.services directly.';
+      }
+    } catch {
       statusEl.classList.add('is-visible');
       statusEl.textContent =
-        'Application received. We read every one and reply to each applicant, usually within a few days.';
-      if (!reducedMotion)
-        gsap.fromTo(
-          statusEl,
-          { x: -10, autoAlpha: 0 },
-          { x: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' }
-        );
-    }, 900);
+        'The network dropped before we could record your application. Nothing was lost: try again, or email careers@softbase.services directly.';
+    } finally {
+      submitBtn.disabled = false;
+      if (btnLabel) btnLabel.textContent = 'Send the application';
+    }
   });
 }
 

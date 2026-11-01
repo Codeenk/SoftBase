@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   base: '/',
+  appType: 'mpa',
   server: {
     host: '127.0.0.1',
     port: 5173,
@@ -14,6 +15,7 @@ export default defineConfig({
       input: {
         main: new URL('./index.html', import.meta.url).pathname,
         careers: new URL('./careers.html', import.meta.url).pathname,
+        privacy: new URL('./privacy.html', import.meta.url).pathname,
       },
       output: {
         manualChunks(id) {

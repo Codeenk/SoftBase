@@ -147,6 +147,32 @@
   color: var(--amber);
 }
 
+/* --------------------------------------------------- DISCLOSURE & BENEFITS */
+
+.disclosure {
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--amber);
+  border-radius: var(--r-2);
+  background: var(--surface-1);
+  padding: var(--s-5);
+  max-width: 860px;
+  margin-top: var(--s-6);
+}
+
+.disclosure p {
+  color: var(--fg-dim);
+  line-height: 1.65;
+  font-size: var(--fs-sm);
+}
+
+.steps--auto {
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+#benefit-list .plan-card__body {
+  color: var(--fg-dim);
+}
+
 /* ----------------------------------------------------------------- RESPONSIVE */
 
 @media (max-width: 680px) {

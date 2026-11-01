@@ -1,0 +1,119 @@
+/* Hallmark · shape: document page · genre: modern-minimal · theme: Machine Shop (by request)
+ * hero: none, document masthead · nav: shared minimal bar · footer: none
+ * sections: policy sections only · axes: dark graphite, one hot signal · material: words · v2.0.0 */
+/* Hallmark · pre-emit critique: P2 H2 E2 S2 R2 V2 · weakest: E, sections could tighten
+ * Hallmark · waived 24b: single static document page, layout spacing follows the 4px scale
+ * Hallmark · waived 26a/26b (html files only): :focus-visible and :active live in the linked base.css; the single-file lint cannot see them
+ * Hallmark · waived 64: mono is the material of this theme; the kicker stays mono, untracked, uppercase-as-document-mark */
+
+html {
+  overflow-x: clip;
+}
+
+.pp-main {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 140px 24px 96px;
+}
+
+.pp-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 800;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: var(--gutter);
+  background: color-mix(in srgb, var(--surface-0) 84%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.pp-bar a {
+  text-decoration: none;
+}
+
+.pp-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.pp-mark {
+  display: grid;
+  gap: 2px;
+  width: 22px;
+}
+
+.pp-mark span {
+  display: block;
+  height: 2px;
+  background: var(--fg);
+}
+
+.pp-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variation-settings: 'wght' 700;
+  letter-spacing: -0.03em;
+}
+
+.pp-name-sub {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: var(--tracking-wide);
+  color: var(--fg-mute);
+  margin-left: 4px;
+}
+
+.pp-back {
+  color: var(--fg-dim);
+  font-size: var(--fs-sm);
+  transition: color var(--dur-2) var(--ease-out);
+}
+
+.pp-back:hover {
+  color: var(--fg);
+}
+
+.pp-main {
+  color: var(--fg);
+  line-height: 1.7;
+}
+
+.pp-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--signal);
+  margin-bottom: var(--s-4);
+}
+
+.pp-title {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  margin-bottom: var(--s-6);
+  max-width: 18ch;
+  text-wrap: balance;
+}
+
+.pp-sections {
+  display: grid;
+  gap: var(--s-5);
+  color: var(--fg-dim);
+  font-size: var(--fs-body);
+}
+
+.pp-sections h2 {
+  font-size: var(--fs-h4);
+  color: var(--fg);
+  margin-bottom: var(--s-2);
+  text-wrap: balance;
+}
+
+.pp-sections a {
+  color: var(--signal);
+}
