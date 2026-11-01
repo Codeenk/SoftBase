@@ -202,9 +202,9 @@ export const engagement = [
     icon: 'solar:bolt-bold-duotone',
     name: 'Sprint',
     kicker: 'Best for a single unknown',
-    price: 'from $8k',
-    unit: 'per 2-week sprint',
-    body: 'A focused team for two weeks. Best when one specific thing is blocking you and you need it unblocked, not a whole system.',
+    budget: 'You set the budget',
+    unit: 'we scope a two-week build around it',
+    body: 'A focused team for two weeks, for when one specific thing is blocking you and needs unblocking.',
     includes: ['Discovery or spike', 'Working increment', 'Written handover', 'Fixed weekly cadence'],
     featured: false,
   },
@@ -213,8 +213,8 @@ export const engagement = [
     icon: 'solar:rocket-bold-duotone',
     name: 'Full build',
     kicker: 'Best for a new product',
-    price: 'from $24k',
-    unit: 'per 4-week phase',
+    budget: 'You set the budget',
+    unit: 'we scope the whole phase around it',
     body: 'End-to-end delivery of a custom product: discovery, design, build, deploy and the documentation to run it without us.',
     includes: [
       'Everything in Sprint',
@@ -230,9 +230,9 @@ export const engagement = [
     icon: 'solar:users-group-rounded-bold-duotone',
     name: 'Embedded team',
     kicker: 'Best for ongoing work',
-    price: 'from $18k',
-    unit: 'per month',
-    body: 'A named senior team inside your process: your standups, your board, your standards. Scale the team up or down as the roadmap moves.',
+    budget: 'You set the budget',
+    unit: 'we scope the monthly retainer around it',
+    body: 'A named senior team inside your process: your standups, your board, your standards, scaling as the roadmap moves.',
     includes: [
       'Everything in Full build',
       'Dedicated cross-functional squad',
@@ -249,7 +249,7 @@ export const engagement = [
 export const faqs = [
   {
     q: 'How quickly can you start?',
-    a: 'Discovery can usually begin within two to three weeks of a signed engagement. If your timeline is tighter than that, say so in the first message; we occasionally hold emergency capacity for exactly this situation.',
+    a: 'Discovery usually begins within two to three weeks of a signed engagement. Tighter than that? Say so in the first message; we hold emergency capacity for it.',
   },
   {
     q: 'Do you work with our existing codebase?',
@@ -257,7 +257,7 @@ export const faqs = [
   },
   {
     q: 'What does a fixed price actually cover?',
-    a: 'The scope written into the blueprint, delivered to the acceptance criteria agreed in that document. If the requirement changes in a way that alters the architecture, we re-scope it in writing before any work continues, so you are never surprised by an invoice.',
+    a: 'The scope written into the blueprint, delivered to its acceptance criteria. If requirements change the architecture, we re-scope in writing before work continues: you are never surprised by an invoice.',
   },
   {
     q: 'Who owns the code and the designs?',
@@ -337,4 +337,5 @@ export const nav = [
   { label: 'Process', href: '#process' },
   { label: 'Work', href: '#work' },
   { label: 'Pricing', href: '#pricing' },
+  { label: 'Careers', href: 'careers.html' },
 ];

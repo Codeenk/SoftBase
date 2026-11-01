@@ -184,9 +184,9 @@
             <div class="sec-head__text">
               <h2 class="sec-head__title" data-split="words">Spec it yourself. See the build.</h2>
               <p class="sec-head__lede">
-                Choose what you need and what matters most. This is a real estimator running
-                in your browser: it returns an architecture, a module list, a timeline and a
-                budget band. No email required, no sales sequence.
+                Choose what you need. The estimator returns an architecture, a module
+                list, a timeline and a scope sketch. Your budget turns it into an exact
+                estimate.
               </p>
             </div>
           </header>
@@ -262,8 +262,8 @@
             <div class="sec-head__text">
               <h2 class="sec-head__title" data-split="words">The bench we build on.</h2>
               <p class="sec-head__lede">
-                We pick boring, well-understood technology for the parts that carry the business
-                and save our novelty budget for the part that is genuinely new.
+                Boring, well-understood technology for the parts that carry the business;
+                the novelty budget goes to the part that is genuinely new.
               </p>
             </div>
           </header>
@@ -278,12 +278,45 @@
             <div class="sec-head__text">
               <h2 class="sec-head__title" data-split="words">Three ways to work with us.</h2>
               <p class="sec-head__lede">
-                Every engagement starts with a written blueprint. If the blueprint does not
-                convince you, nothing is signed and nothing is charged beyond the discovery.
+                We don’t publish a price list: no two builds are the same. You bring the
+                budget you have in mind; we shape the engagement around it.
               </p>
             </div>
           </header>
           <div class="plans" id="plans"></div>
+
+          <ol class="priceflow" id="priceflow">
+            <li class="priceflow__step">
+              <span class="priceflow__num" aria-hidden="true"></span>
+              <div>
+                <h3 class="priceflow__title">You write first</h3>
+                <p class="priceflow__body">
+                  Send the messy brief with the budget you have in mind, or write
+                  “not sure yet”: that is an honest answer too.
+                </p>
+              </div>
+            </li>
+            <li class="priceflow__step">
+              <span class="priceflow__num" aria-hidden="true"></span>
+              <div>
+                <h3 class="priceflow__title">We call, or we meet</h3>
+                <p class="priceflow__body">
+                  Email, a video call, or a sit-down at the Oakland studio:
+                  whichever pins down requirements fastest.
+                </p>
+              </div>
+            </li>
+            <li class="priceflow__step">
+              <span class="priceflow__num" aria-hidden="true"></span>
+              <div>
+                <h3 class="priceflow__title">You get the estimate</h3>
+                <p class="priceflow__body">
+                  A written, itemised scope and budget against your number, signed only
+                  when the blueprint convinces you.
+                </p>
+              </div>
+            </li>
+          </ol>
         </div>
       </section>
 
@@ -306,9 +339,9 @@
           <div class="contact__intro">
             <h2 class="contact__title" data-split="words">Tell us the thing that doesn’t work yet.</h2>
             <p class="contact__lede">
-              Send the messy version. The half-formed brief, the spreadsheet, the sentence
-              your team says in a meeting. We reply within one business day with an honest
-              read on whether we are the right studio for it.
+              Send the messy version: the half-formed brief, the spreadsheet, the sentence
+              your team says in meetings. We reply within one business day with an honest
+              read on whether we fit.
             </p>
 
             <dl class="contact__details">
@@ -348,17 +381,8 @@
                 <p class="field__error" data-error-for="f-company"></p>
               </div>
               <div class="field">
-                <label for="f-budget">Budget band</label>
-                <div class="select">
-                  <select id="f-budget" name="budget">
-                    <option value="">Not sure yet</option>
-                    <option value="8-24">$8k to $24k</option>
-                    <option value="24-60">$24k to $60k</option>
-                    <option value="60-120">$60k to $120k</option>
-                    <option value="120+">$120k+</option>
-                  </select>
-                  <svg viewBox="0 0 16 16" aria-hidden="true" width="12" height="12"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" /></svg>
-                </div>
+                <label for="f-budget">Your budget (USD)</label>
+                <input id="f-budget" name="budget" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 25000, or 'not sure yet'" />
                 <p class="field__error" data-error-for="f-budget"></p>
               </div>
             </div>
@@ -412,6 +436,7 @@
               <li><a href="#pricing">Engagement models</a></li>
               <li><a href="#faq">FAQ</a></li>
               <li><a href="#contact">Start a project</a></li>
+              <li><a href="careers.html">Careers · BD internship</a></li>
               <li><a href="mailto:build@softbase.services">build@softbase.services</a></li>
             </ul>
           </div>

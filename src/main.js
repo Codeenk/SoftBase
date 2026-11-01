@@ -89,6 +89,7 @@ const state = {
   heroActive: true,
 };
 
+document.documentElement.classList.add('is-locked');
 document.body.classList.add('is-locked');
 
 function boot() {
@@ -327,8 +328,8 @@ function computePlan() {
   });
 
   const cost = core.cost * featureMult * tFactor * teamFactor;
-  const low = Math.round(cost * 0.85);
-  const high = Math.round(cost * 1.2);
+  const size =
+    cost < 24 ? 'Focused' : cost < 34 ? 'Standard' : cost < 48 ? 'Extensive' : 'Full-scale';
   const weeks = Math.max(
     4,
     Math.round(core.weeks * Math.pow(featureMult, 0.4) * tFactor * Math.pow(teamFactor, 0.35))
@@ -344,8 +345,7 @@ function computePlan() {
   const base = plannerBaseStacks[product];
 
   return {
-    low,
-    high,
+    size,
     weeks,
     modules,
     stack: base.stack,
@@ -360,13 +360,13 @@ function renderPlan() {
 
   el.innerHTML = `
     <div class="plan__head">
-      <span>Estimate · live</span>
+      <span>Scope sketch · live</span>
       <span class="plan__head-dot" aria-hidden="true"></span>
     </div>
     <div class="plan__body">
       <dl class="plan__row">
-        <dt>Budget band</dt>
-        <dd class="plan__budget">$${plan.low}k <span>–</span> $${plan.high}k</dd>
+        <dt>Build size</dt>
+        <dd class="plan__size">${plan.size}</dd>
       </dl>
       <dl class="plan__row">
         <dt>To first release</dt>
@@ -382,7 +382,7 @@ function renderPlan() {
       </dl>
       <p class="plan__note">${plan.note}</p>
     </div>
-    <div class="plan__foot">Runs entirely in your browser, no email required</div>`;
+    <div class="plan__foot">Runs in your browser · bring it with your budget for an exact estimate</div>`;
 
   if (!reducedMotion) {
     gsap.fromTo(
@@ -472,7 +472,7 @@ function buildPlans() {
           <h3 class="plan-card__name">${p.name}</h3>
           <p class="plan-card__kicker">${p.kicker}</p>
         </div>
-        <p class="plan-card__price"><b>${p.price}</b><span>${p.unit}</span></p>
+        <p class="plan-card__price"><b>${p.budget}</b><span>${p.unit}</span></p>
         <p class="plan-card__body">${p.body}</p>
         <ul class="plan-card__includes">
           ${p.includes.map((i) => `<li>${checkSVG}<span>${i}</span></li>`).join('')}
@@ -537,6 +537,7 @@ function initLoader() {
 
   const finish = () => {
     loader.classList.add('is-done');
+    document.documentElement.classList.remove('is-locked');
     document.body.classList.remove('is-locked');
     state.lenis?.start();
     heroIntro();
@@ -1106,6 +1107,7 @@ function initReveals() {
   revealUp('.case__metric');
   revealUp('.stack__group', { stagger: 3 });
   revealUp('.plan-card', { stagger: 3 });
+  revealUp('.priceflow__step', { stagger: 3 });
   revealUp('.faq-item', { stagger: 3 });
   revealUp('.contact__intro > *', { stagger: 5 });
   revealUp('.cform');

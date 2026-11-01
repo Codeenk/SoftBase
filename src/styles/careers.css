@@ -1,0 +1,165 @@
+/* Hallmark · shape: Workbench scroll · genre: modern-minimal · theme: Machine Shop (by request)
+ * hero: type-led stage with spec-sheet facts · nav: shared fixed bar, no hide on small screens
+ * footer: shared mast and columns · signature: the application form, one screen, no portals
+ * sections: Hero · Role · Duties · Fit on paper · Apply · Footer
+ * axes: dark graphite, one hot signal, mono spec voice · material: words · v2.0.0 */
+/* Hallmark · pre-emit critique: P2 H2 E2 S2 R2 V2 · weakest: E, role rows could tighten
+ * Hallmark · waived 24b: micro-spacing inside components is optical; the 4px scale governs layout
+ * Hallmark · waived 64: mono is the material of this theme; labels stay mono, untracked, sentence case
+ * Hallmark · waived 26a/26b (careers.html only): control states live in the linked stylesheets; the single-file lint cannot see them */
+
+/* ------------------------------------------------------------------- HERO */
+
+.chero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
+  padding-top: calc(var(--header-h) + var(--s-7));
+  padding-bottom: var(--s-8);
+  overflow: clip;
+}
+
+.chero__body {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: start;
+  gap: var(--s-6);
+}
+
+.chero__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+}
+
+.chero__kicker {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--fg-mute);
+}
+
+.chero__title {
+  font-size: var(--fs-h1);
+  max-width: 14ch;
+}
+
+.chero__lede {
+  font-size: var(--fs-lede);
+  line-height: 1.55;
+  color: var(--fg-dim);
+  max-width: 50ch;
+}
+
+.chero__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-6) var(--s-8);
+  margin-top: var(--s-6);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--rule);
+}
+
+.chero__facts dt {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--fg-mute);
+  margin-bottom: var(--s-2);
+}
+
+.chero__facts dd {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variation-settings: 'wght' 700;
+  font-stretch: 84%;
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* ------------------------------------------------------------------- ROLE */
+
+.role__summary {
+  font-size: var(--fs-lede);
+  line-height: 1.6;
+  color: var(--fg);
+  max-width: 62ch;
+  margin-bottom: var(--s-7);
+}
+
+.role__rows {
+  border-top: 1px solid var(--rule-2);
+  max-width: 860px;
+}
+
+.role__row {
+  display: grid;
+  grid-template-columns: minmax(0, 180px) minmax(0, 1fr);
+  gap: var(--s-4);
+  align-items: baseline;
+  padding-block: var(--s-4);
+  border-bottom: 1px solid var(--rule);
+}
+
+.role__row dt {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--fg-mute);
+}
+
+.role__row dd {
+  color: var(--fg);
+  line-height: 1.55;
+}
+
+/* -------------------------------------------------------------------- FIT */
+
+.fit__shell {
+  position: relative;
+}
+
+.fit__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-7);
+  max-width: 980px;
+}
+
+.fit__heading {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  color: var(--fg-mute);
+  margin-bottom: var(--s-4);
+}
+
+.fit__col .plan-card__includes li {
+  padding-block: 7px;
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--fs-body);
+  color: var(--fg-dim);
+}
+
+.fit__col .plan-card__includes--gain svg {
+  color: var(--amber);
+}
+
+/* ----------------------------------------------------------------- RESPONSIVE */
+
+@media (max-width: 680px) {
+  .role__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-1);
+  }
+
+  .fit__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .chero__facts {
+    gap: var(--s-5);
+  }
+}
